@@ -28,6 +28,7 @@ namespace WindowsFormsApplication1
         bool onBrick;
         bool start;
         bool fire;
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -93,9 +94,10 @@ namespace WindowsFormsApplication1
         bool lose;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            
+            marioSlide.Top = player.Top + marioSlide.Height;
             if (fire == true)
             {
+                x += speed * 2;
                 fireBall.Show();
                 fireBall.Left += speed * 2;
                 if (fireBall.Left > this.Width)
@@ -355,6 +357,7 @@ namespace WindowsFormsApplication1
                 {
                     player.Top = ground.Top - player.Height;
                     force = 0;
+                    //sliding on ground
                     if (sliding == true)
                     {
                         marioSlide.Show();
@@ -376,11 +379,22 @@ namespace WindowsFormsApplication1
                     player.Image = Properties.Resources.mexicanJump;
                     gifnotloaded = true;
                 }
+                if (onBrick == true)
+                {
+                    if (sliding == true)
+                    {
+                        marioSlide.Show();
+                        player.Hide();
+                    }
+                }
             }
+            Refresh();
         }
+        int x;
+        int y;
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(Properties.Resources.fireBall, 52, 402, 70, 38);
+            e.Graphics.DrawImage(Properties.Resources.fireBall, x, y, 70, 38);
         }
 
     }
